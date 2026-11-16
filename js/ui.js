@@ -273,7 +273,7 @@ export function hideSpinner() {
     if (!loader) return;
     setTimeout(() => {
         loader.classList.add("hidden")
-    }, 1500)
+    }, 3100)
 }
 
 export function optionSelect() {
