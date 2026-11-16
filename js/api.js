@@ -1,4 +1,3 @@
-// import { saveData } from "./storage.js";
 import { handleError } from "./error.js";
 
 // import { handleError } from "./error.js";
@@ -9,6 +8,7 @@ export async function getChannels() {
             handleError(res)
         }
         const data = await res.json();
+        console.log(data)
         return data;
     }
     catch (error) {
