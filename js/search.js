@@ -6,6 +6,7 @@ let chercheValure = ""
 export function selectCategory(channels) {
     const categoriesSelect = document.getElementById('categorie-bar')
     const favoriteOption = document.getElementById('favorite-option')
+    const blacklistOption = document.getElementById('black-option')
 
     categoriesSelect.addEventListener('click', (e) => {
         const selectedCategory = e.target.closest(".categories-item")
@@ -15,12 +16,20 @@ export function selectCategory(channels) {
 
         displayChanges(channels);
     });
+
     if (favoriteOption) {
         favoriteOption.addEventListener('click', () => {
             categorieNom = "FAVORITE"
             displayChanges(channels);
-        })
-    }
+        });
+    };
+
+    if(blacklistOption){
+        blacklistOption.addEventListener('click', () =>{
+            categorieNom = "BLACK LIST"
+            displayChanges(channels)
+        });
+    };
 }
 
 export function rechercheChannel(channels) {
@@ -32,33 +41,34 @@ export function rechercheChannel(channels) {
         chercheValure = e.target.value.toLowerCase().trim()
 
         displayChanges(channels)
-
-        // const channelsFilter = channels.filter(channel =>
-
-        //     channel.name.toLowerCase().includes(chercheValure) ||
-        //     channel.category.toLowerCase().includes(chercheValure) ||
-        //     channel.country.toLowerCase().includes(chercheValure) ||
-        //     channel.channelNumber.toLowerCase().includes(chercheValure)
-        // );
-
-        // console.log(channelsFilter)
-
     })
 }
 
-function displayChanges(channels) {
+export function displayChanges(channels) {
     let channelsFilter = channels;
 
-    if(categorieNom === "FAVORITE"){
+    if(categorieNom === "BLACK LIST"){
+        channelsFilter = channelsFilter.filter(
+            channel => channel.isBlacklisted === true
+        );
+    }
+
+    else if(categorieNom === "FAVORITE"){
         channelsFilter = channelsFilter.filter(
             channel => channel.isFavorite === true
         );
     }
 
-    else if (categorieNom !== "TOUTES CATÉGORIES") {
+    else if (categorieNom == "TOUTES CATÉGORIES") {
         channelsFilter = channelsFilter.filter(
-            channel => channel.category === categorieNom
+            channel => !channel.isBlacklisted
         );
+    }
+
+    else {
+        channelsFilter = channelsFilter.filter(
+            channel => channel.category === categorieNom && !channel.isBlacklisted
+        )
     }
 
     channelsFilter = channelsFilter.filter(channel =>

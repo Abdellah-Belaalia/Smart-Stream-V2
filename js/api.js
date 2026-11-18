@@ -42,3 +42,24 @@ export async function setChannelFavorite(channelId, status) {
         throw error;
     }
 }
+
+export async function setChannelBlackListed(channelId, status) {
+    try {
+        const res = await fetch(`${API_URL}/${channelId}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ isBlacklisted: status })
+        });
+
+        if(!res.ok){
+            await handleError(res)
+        }
+        const channel = await res.json();
+        console.log(channel)
+        return channel
+
+    } catch (error) {
+        console.error(error)
+        throw error;
+    }
+}

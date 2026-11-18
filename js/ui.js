@@ -1,4 +1,5 @@
-import { setChannelFavorite } from "./api.js";
+import { setChannelBlackListed, setChannelFavorite } from "./api.js";
+import { displayChanges } from "./search.js";
 
 export function showCategorie() {
     const categorieBtn = document.getElementById("categorie-btn");
@@ -119,7 +120,7 @@ export function rendre(data) {
 </svg>
 
 <!--Black-list-->
-<svg data-action="black-list" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white fill-current cursor-pointer hover:text-red-500" viewBox="0 0 32 32" version="1.1">
+<svg data-action="black-list" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ${element.isBlacklisted ? 'text-red-500' : 'text-white'} fill-current cursor-pointer hover:text-red-500" viewBox="0 0 32 32" version="1.1">
 <title>interdiction</title>
 <path d="M23.593 2.944c-7.307-4.219-16.65-1.715-20.869 5.592s-1.715 16.65 5.592 20.869 16.65 1.715 20.869-5.592 1.715-16.65-5.592-20.869zM21.848 5.96c5.177 2.989 7.232 9.307 5.023 14.688l-15.391-15.391c3.261-1.331 7.081-1.194 10.368 0.703zM10.047 26.401c-5.178-2.99-7.233-9.311-5.021-14.693l15.394 15.394c-3.263 1.333-7.085 1.198-10.373-0.701zM23.229 25.471l-16.571-16.571c0.596-0.763 1.273-1.436 2.012-2.014l16.57 16.57c-0.596 0.763-1.273 1.436-2.011 2.015z"/>
 </svg>
@@ -265,6 +266,22 @@ export function playChannel(channels) {
                 choosedChannel.isFavorite = newStatus
                 setChannelFavorite(channelId, newStatus)
             }
+
+            if(choix ===  "black-list"){
+                const choosedChannel = channels.find(
+                    channel => channel.id === channelId
+                );
+
+                const newStatus = !choosedChannel.isBlacklisted
+
+                btnAction.classList.toggle("text-red-500", newStatus)
+                btnAction.classList.toggle("text-white", !newStatus)
+
+                choosedChannel.isBlacklisted = newStatus
+                setChannelBlackListed(channelId, newStatus)
+                displayChanges(channels)
+            }
+
 
             return;
         }
