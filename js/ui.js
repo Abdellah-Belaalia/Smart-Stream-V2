@@ -215,7 +215,7 @@ export function playChannel(channels) {
 
 
     const selectedChannel = channels.find(
-        channel => channel.id === "1"
+        channel => !channel.isBlacklisted
 
         // change to channels[0] cz if there is no channels with the id 1 it'll be cracked
     );
