@@ -11,13 +11,10 @@ export async function getChannels() {
             // await cz handleError is async 
         }
         const data = await res.json();
-        // console.log(data)
         return data;
     }
     catch (error) {
-        console.error(`hafla`,error)
-        // "throw" so we stop the code and not give undefinned channels's variable in app.js
-        throw error; 
+        console.error(`hafla`, error)
     }
 }
 
@@ -30,16 +27,14 @@ export async function setChannelFavorite(channelId, status) {
             body: JSON.stringify({ isFavorite: status })
         });
 
-        if(!res.ok){
+        if (!res.ok) {
             await handleError(res)
         }
         const channel = await res.json();
-        console.log(channel)
         return channel
 
     } catch (error) {
         console.error(error)
-        throw error;
     }
 }
 
@@ -48,27 +43,31 @@ export async function setChannelBlackListed(channelId, status) {
         const res = await fetch(`${API_URL}/${channelId}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ isBlacklisted: status, isFavorite : false })
+            body: JSON.stringify({ isBlacklisted: status, isFavorite: false })
         });
 
-        if(!res.ok){
+        if (!res.ok) {
             await handleError(res)
         }
         const channel = await res.json();
-        console.log(channel)
         return channel
 
     } catch (error) {
         console.error(error)
-        throw error;
     }
 }
 
-// export async function deleteChannel(channelId){
-//     try{
-//         const res = await fetch(`${API_URL}/${channelId}`, {
-//             method : "DELETE",
-//             header : { "Content-Type": "application/json"},
-//         })
-//     }
-// }
+export async function deleteChannel(channelId) {
+    try {
+        const res = await fetch(`${API_URL}/${channelId}`, {
+            method: "DELETE",
+        })
+        if (!res.ok) {
+            await handleError(res)
+        }
+        const channel = await res.json()
+        return channel
+    } catch (error) {
+        console.error(error)
+    }
+}
