@@ -11,7 +11,7 @@ export async function getChannels() {
             // await cz handleError is async 
         }
         const data = await res.json();
-        console.log(data)
+        // console.log(data)
         return data;
     }
     catch (error) {
@@ -48,7 +48,7 @@ export async function setChannelBlackListed(channelId, status) {
         const res = await fetch(`${API_URL}/${channelId}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ isBlacklisted: status })
+            body: JSON.stringify({ isBlacklisted: status, isFavorite : false })
         });
 
         if(!res.ok){
@@ -63,3 +63,12 @@ export async function setChannelBlackListed(channelId, status) {
         throw error;
     }
 }
+
+// export async function deleteChannel(channelId){
+//     try{
+//         const res = await fetch(`${API_URL}/${channelId}`, {
+//             method : "DELETE",
+//             header : { "Content-Type": "application/json"},
+//         })
+//     }
+// }

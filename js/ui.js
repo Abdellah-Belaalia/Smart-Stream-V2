@@ -259,24 +259,32 @@ export function playChannel(channels) {
                     channel => channel.id === channelId
                 );
                 const newStatus = !choosedChannel.isFavorite
+                console.log("choosed", choosedChannel, "new", newStatus);
 
-                btnAction.classList.toggle("text-yellow-400", newStatus)
-                btnAction.classList.toggle("text-white", !newStatus)
+                /* ! meaning
+                if(choosedChannel.isFavorite == false){
+                    choosedChannel.isFavorite = true 
+                } else {
+                    chooserdChannels.isFavorite = false
+                }
+                */
+
 
                 choosedChannel.isFavorite = newStatus
                 setChannelFavorite(channelId, newStatus)
+                displayChanges(channels)
             }
 
-            if(choix ===  "black-list"){
+            if (choix === "black-list") {
                 const choosedChannel = channels.find(
                     channel => channel.id === channelId
                 );
 
+
                 const newStatus = !choosedChannel.isBlacklisted
+                console.log("choosed", choosedChannel, "new", newStatus);
 
-                btnAction.classList.toggle("text-red-500", newStatus)
-                btnAction.classList.toggle("text-white", !newStatus)
-
+                choosedChannel.isFavorite = false
                 choosedChannel.isBlacklisted = newStatus
                 setChannelBlackListed(channelId, newStatus)
                 displayChanges(channels)

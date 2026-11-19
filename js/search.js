@@ -49,7 +49,7 @@ export function displayChanges(channels) {
 
     if(categorieNom === "BLACK LIST"){
         channelsFilter = channelsFilter.filter(
-            channel => channel.isBlacklisted === true 
+            channel => channel.isBlacklisted === true
         );
     }
 
