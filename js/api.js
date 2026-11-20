@@ -71,3 +71,22 @@ export async function deleteChannel(channelId) {
         console.error(error)
     }
 }
+
+export async function addChannel(channel) {
+    try {
+        const res = await fetch(`${API_URL}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(channel)
+        });
+
+        if (!res.ok) {
+            await handleError(res)
+        }
+        // const channel = await res.json();
+        // return channel
+
+    } catch (error) {
+        console.error(error)
+    }
+}

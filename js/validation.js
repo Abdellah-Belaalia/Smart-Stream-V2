@@ -1,8 +1,6 @@
-export function channelValidation() {
-    const form = document.getElementById('form-ajouter')
-    console.log("==> Working!", form)
-
-    if (!form) return;
+import { getChannels, addChannel } from "./api.js";
+import { displayChanges } from "./search.js";
+export async function createChannel() {
 
     const regexName = /^[A-Za-zÀ-ÿ0-9\s-]{2,30}$/;
     const regexChannelNumber = /^\d{1,6}$/;
@@ -24,49 +22,84 @@ export function channelValidation() {
     const errorCountry = document.getElementById('errorCountry')
     const errorCountryCode = document.getElementById('errorCountryCode')
     const errorStreamUrl = document.getElementById('errorStreamUrl')
-    console.log("==> Working!")
 
-    name.addEventListener('input', () => {
-        if (regexName.test(name.value.trim())) {
-            console.log("==> Name!", regexName.test(name.value.trim()))
-            errorNom.textContent = ""
-        } else {
-            errorNom.textContent = "Entrer un nom valid"
+    if (regexName.test(name.value.trim())) {
+        errorNom.textContent = ""
+    } else {
+        errorNom.textContent = "Entrer un nom valid"
+        return false;
+    }
+
+    if (regexChannelNumber.test(channelNumber.value.trim())) {
+        errorChannelNumber.textContent = ""
+    } else {
+        errorChannelNumber.textContent = "Entrer un nombre valid"
+        return false;
+    }
+
+    if (regexCategory.test(category.value.trim())) {
+        errorCategory.textContent = ""
+    } else {
+        errorCategory.textContent = "Entrer un nom valid"
+        return false;
+    }
+
+    if (regexCountry.test(country.value.trim())) {
+        errorCountry.textContent = ""
+    } else {
+        errorCountry.textContent = "Entrer un nom valid"
+        return false;
+    }
+
+    if (regexCountryCode.test(countryCode.value.trim())) {
+        errorCountryCode.textContent = ""
+    } else {
+        errorCountryCode.textContent = "Entrer un nom valid"
+        return false;
+    }
+
+    if (regexUrl.test(streamUrl.value.trim())) {
+        errorStreamUrl.textContent = ""
+    } else {
+        errorStreamUrl.textContent = "Entrer un nom valid"
+        return false;
+    }
+
+    const channels = await getChannels()
+
+    let nextId = 0
+    channels.forEach(channel => {
+        if (Number(channel.id) > nextId) {
+            nextId = Number(channel.id)
         }
-    })
-    channelNumber.addEventListener('input', () => {
-        if (regexChannelNumber.test(channelNumber.value.trim())) {
-            errorChannelNumber.textContent = ""
-        } else {
-            errorChannelNumber.textContent = "Entrer un nombre valid"
-        }
-    })
-    category.addEventListener('input', () => {
-        if (regexCategory.test(category.value.trim())) {
-            errorCategory.textContent = ""
-        } else {
-            errorCategory.textContent = "Entrer un nom valid"
-        }
-    })
-    country.addEventListener('input', () => {
-        if (regexCountry.test(country.value.trim())) {
-            errorCountry.textContent = ""
-        } else {
-            errorCountry.textContent = "Entrer un nom valid"
-        }
-    })
-    countryCode.addEventListener('input', () => {
-        if (regexCountryCode.test(countryCode.value.trim())) {
-            errorCountryCode.textContent = ""
-        } else {
-            errorCountryCode.textContent = "Entrer un nom valid"
-        }
-    })
-    streamUrl.addEventListener('input', () => {
-        if (regexUrl.test(streamUrl.value.trim())) {
-            errorStreamUrl.textContent = ""
-        } else {
-            errorStreamUrl.textContent = "Entrer un nom valid"
-        }
-    })
+    });
+
+
+    const channel =
+    {
+        "id": nextId + 1,
+        "channelNumber": channelNumber.value,
+        "name": name.value,
+        "category": category.value,
+        "country": country.value,
+        "countryCode": countryCode.value,
+        "logo": "https://via.placeholder.com/60x60?text=NatGeo",
+        "previewImage": "https://via.placeholder.com/800x450?text=NatGeo+Doc",
+        "streamUrl": streamUrl.value,
+        "isLive": true,
+        "epg": {
+            "currentProgram": "Wild Wonders (Ep. 95)",
+            "startTime": "13:15",
+            "endTime": "14:15",
+            "progressPercentage": 79
+        },
+        "isFavorite": false,
+        "isBlacklisted": false
+    }
+
+    
+
+    addChannel(channel)
+    displayChanges(channels)
+
 }

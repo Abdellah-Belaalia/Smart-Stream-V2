@@ -1,6 +1,6 @@
 import { deleteChannel, setChannelBlackListed, setChannelFavorite } from "./api.js";
 import { displayChanges } from "./search.js";
-import { channelValidation } from "./validation.js";
+import { createChannel } from "./validation.js";
 
 export function showCategorie() {
     const categorieBtn = document.getElementById("categorie-btn");
@@ -44,6 +44,7 @@ function getCategories(channels) {
         return categories.indexOf(category) === index
     });
     return ["TOUTES CATÉGORIES", ...uniqueCategorie]
+    
 }
 
 
@@ -576,11 +577,14 @@ export function popupAjouter(channel) {
 
         const form = document.getElementById('form-ajouter')
 
-        form.addEventListener('submit', (e)=>{
+        form.addEventListener('submit', (e) => {
             e.preventDefault();
-            // function regex
+
+            createChannel();
+
+            form.reset();
+            popup.remove();
         })
-        channelValidation()
     });
 }
 
