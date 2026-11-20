@@ -1,6 +1,7 @@
 import { rendre } from "./ui.js";
+import { saveData, getData } from "./storage.js";
 
-let categorieNom = "TOUTES CATÉGORIES"
+let categorieNom = getData("selectCategory") || "TOUTES CATÉGORIES";
 let chercheValure = ""
 
 export function selectCategory(channels) {
@@ -13,20 +14,23 @@ export function selectCategory(channels) {
         if (!selectedCategory) return;
 
         categorieNom = selectedCategory.textContent;
-
+        saveData("selectedCategory", categorieNom)
         displayChanges(channels);
     });
 
     if (favoriteOption) {
         favoriteOption.addEventListener('click', () => {
             categorieNom = "FAVORITE"
+            saveData("selectedCategory", categorieNom)
+
             displayChanges(channels);
         });
     };
 
-    if(blacklistOption){
-        blacklistOption.addEventListener('click', () =>{
+    if (blacklistOption) {
+        blacklistOption.addEventListener('click', () => {
             categorieNom = "BLACK LIST"
+            saveData("selectedCategory", categorieNom)
             displayChanges(channels)
         });
     };
@@ -47,13 +51,13 @@ export function rechercheChannel(channels) {
 export function displayChanges(channels) {
     let channelsFilter = channels;
 
-    if(categorieNom === "BLACK LIST"){
+    if (categorieNom === "BLACK LIST") {
         channelsFilter = channelsFilter.filter(
             channel => channel.isBlacklisted === true
         );
     }
 
-    else if(categorieNom === "FAVORITE"){
+    else if (categorieNom === "FAVORITE") {
         channelsFilter = channelsFilter.filter(
             channel => channel.isFavorite === true && !channel.isBlacklisted
         );
