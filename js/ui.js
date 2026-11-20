@@ -299,7 +299,6 @@ export function rendre(data) {
 
     data.forEach(element => {
         if (element.isBlacklisted) {
-            //function blackListedChannels
             channelsCard.append(blacklistedChannels(element))
         }
         else {
@@ -395,13 +394,13 @@ export function playChannel(channels) {
 
                 const confirmation = confirm(`Voulez vous supprimer cette chaîne ${choosedChannel.name} ?`)
 
-                if(!confirmation) return
+                if (!confirmation) return
 
                 const channelIndex = channels.findIndex(
                     channel => channel.id === channelId
                 )
 
-                if(channelIndex !== -1){
+                if (channelIndex !== -1) {
                     channels.splice(channelIndex, 1)
                     deleteChannel(channelId)
                     displayChanges(channels)
@@ -510,6 +509,63 @@ export function showError(res) {
     popup.append(btnFermer)
 
     errorMsg.append(popup)
+
+}
+
+function creationPopup() {
+    const popup = document.createElement('div')
+
+    popup.classList.add(
+        "popup-ajouter",
+        "fixed",
+        "inset-0",
+        "bg-black",
+        "flex",
+        "items-center",
+        "justify-center",
+        "z-50"
+    )
+
+    popup.innerHTML = `
+        <form id="form-ajouter" class="flex flex-col w-fit gap-3 p-6 bg-blue-600 border border-white rounded-xl text-white">
+                  <h2 class="text-xl font-bold mb-2">
+                    Ajouter une chaîne
+                  </h2>
+                  <input type="text" name="name" placeholder="Nom de chaîne" class="p-2 rounded bg-blue-950 border border-white">
+                  <input type="text" name="channelNumber" placeholder="Numéro" class="p-2 rounded bg-blue-950 border border-white">
+                  <input type="text" name="category" placeholder="Categorie" class="p-2 rounded bg-blue-950 border border-white">
+                  <input type="text" name="country" placeholder="Pays (ex: Maroc)" class="p-2 rounded bg-blue-950 border border-white">
+                  <input type="text" name="streamUrl" placeholder="Lien de stream" class="p-2 rounded bg-blue-950 border border-white">
+
+                  <div>
+                    <button type="submit" class="px-4 py-2 rounded bg-blue-950 hover:bg-blue-700">Ajouter</button>
+                    <button type="button" id="btn-annuler" class="px-4 py-2 rounded bg-blue-950 hover:bg-blue-700">Annuler</button>
+                  </div>
+                  
+                </form>
+        `;
+
+    document.body.appendChild(popup)
+
+    return popup;
+
+}
+
+export function popupAjoute(channels) {
+    const ajouterChannel = document.getElementById('button-ajouter')
+
+    if (!ajouterChannel) return;
+
+    ajouterChannel.addEventListener('click', () => {
+
+        const popup = creationPopup();
+
+        const btnAnnuler = document.getElementById('btn-annuler')
+
+        btnAnnuler.addEventListener('click', () => {
+            popup.remove()
+        });
+    });
 
 }
 
