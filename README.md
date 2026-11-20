@@ -1,3 +1,7 @@
+# Smart-Stream
+
+Smart Stream TV est une application web de télévision en direct (IPTV), conçue pour offrir une expérience utilisateur moderne, fluide et immersive, inspirée des interfaces des véritables Smart TV.
+
 Cette application web monopage (SPA) permet de gérer, filtrer et visionner des chaînes TV en direct via une interface moderne et réactive. Elle repose sur une architecture JavaScript modulaire (ES6 Modules) communicant avec une API REST distante (MockAPI) pour la persistance des données, ainsi que sur le LocalStorage pour conserver les préférences de navigation de l'utilisateur.
 
 Objectifs principaux
