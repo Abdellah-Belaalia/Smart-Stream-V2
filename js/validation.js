@@ -80,7 +80,7 @@ export async function createChannel() {
         "id": nextId + 1,
         "channelNumber": channelNumber.value,
         "name": name.value,
-        "category": category.value,
+        "category": category.value.toUpperCase(),
         "country": country.value,
         "countryCode": countryCode.value,
         "logo": "https://via.placeholder.com/60x60?text=NatGeo",

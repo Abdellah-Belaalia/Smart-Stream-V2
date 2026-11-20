@@ -44,9 +44,8 @@ function getCategories(channels) {
         return categories.indexOf(category) === index
     });
     return ["TOUTES CATÉGORIES", ...uniqueCategorie]
-    
-}
 
+}
 
 
 export function categoryShower(channels) {
@@ -514,7 +513,7 @@ export function showError(res) {
 
 }
 
-function creationPopup() {
+export function creationPopup() {
     const popup = document.createElement('div')
 
     popup.classList.add(
@@ -588,30 +587,4 @@ export function popupAjouter(channel) {
     });
 }
 
-// export function optionSelect() {
-//     const channelsCard = document.getElementById("channels-card")
-//     if (!channelsCard) return;
-//     channelsCard.addEventListener("click", (e) => {
-//         const selectedIcon = e.target.closest("svg")
-//         console.log(selectedIcon)
-//         // const channelCard = selectedIcon.closest(".channel-card")
-//         if (!selectedIcon || channelCard) return;
-
-
-//         if (selectedIcon.id === "favorite") {
-//             selectedIcon.classList.toggle("text-yellow-400")
-//             console.log(channelsCard)
-//         }
-//         if (selectedIcon.id === "black-list") {
-//             selectedIcon.classList.toggle("text-red-500")
-//             selectedIcon.classList.toggle("text-white")
-
-//         }
-//         if (selectedIcon.id === "edit") {
-//             selectedIcon.classList.toggle("text-blue-500")
-//             selectedIcon.classList.toggle("text-white")
-
-//         }
-//     })
-// }
 
