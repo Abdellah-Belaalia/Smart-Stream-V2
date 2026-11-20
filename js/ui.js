@@ -1,5 +1,6 @@
 import { deleteChannel, setChannelBlackListed, setChannelFavorite } from "./api.js";
 import { displayChanges } from "./search.js";
+import { channelValidation } from "./validation.js";
 
 export function showCategorie() {
     const categorieBtn = document.getElementById("categorie-btn");
@@ -531,11 +532,18 @@ function creationPopup() {
                   <h2 class="text-xl font-bold mb-2">
                     Ajouter une chaîne
                   </h2>
-                  <input type="text" name="name" placeholder="Nom de chaîne" class="p-2 rounded bg-blue-950 border border-white">
-                  <input type="text" name="channelNumber" placeholder="Numéro" class="p-2 rounded bg-blue-950 border border-white">
-                  <input type="text" name="category" placeholder="Categorie" class="p-2 rounded bg-blue-950 border border-white">
-                  <input type="text" name="country" placeholder="Pays (ex: Maroc)" class="p-2 rounded bg-blue-950 border border-white">
-                  <input type="text" name="streamUrl" placeholder="Lien de stream" class="p-2 rounded bg-blue-950 border border-white">
+                  <input type="text" id="name" placeholder="Nom de chaîne" class="p-2 rounded bg-blue-950 border border-white">
+                  <p id="errorNom" class="text-red-500"></p>
+                  <input type="text" id="channelNumber" name="channelNumber" placeholder="Numéro" class="p-2 rounded bg-blue-950 border border-white">
+                  <p id="errorChannelNumber" class="text-red-500"></p>
+                  <input type="text" id="category" name="category" placeholder="Categorie" class="p-2 rounded bg-blue-950 border border-white">
+                  <p id="errorCategory" class="text-red-500"></p>
+                  <input type="text" id="country" name="country" placeholder="Pays (ex: Maroc)" class="p-2 rounded bg-blue-950 border border-white">
+                  <p id="errorCountry" class="text-red-500"></p>
+                  <input type="text" id="countryCode" name="countryCode" placeholder="Code country (ex: MA)" class="p-2 rounded bg-blue-950 border border-white">
+                  <p id="errorCountryCode" class="text-red-500"></p>
+                  <input type="text" id="streamUrl" name="streamUrl" placeholder="Lien de stream" class="p-2 rounded bg-blue-950 border border-white">
+                  <p id="errorStreamUrl" class="text-red-500"></p>
 
                   <div>
                     <button type="submit" class="px-4 py-2 rounded bg-blue-950 hover:bg-blue-700">Ajouter</button>
@@ -551,12 +559,12 @@ function creationPopup() {
 
 }
 
-export function popupAjoute(channels) {
-    const ajouterChannel = document.getElementById('button-ajouter')
+export function popupAjouter(channel) {
+    const ajouterBtn = document.getElementById('button-ajouter')
 
-    if (!ajouterChannel) return;
+    if (!ajouterBtn) return;
 
-    ajouterChannel.addEventListener('click', () => {
+    ajouterBtn.addEventListener('click', () => {
 
         const popup = creationPopup();
 
@@ -565,8 +573,15 @@ export function popupAjoute(channels) {
         btnAnnuler.addEventListener('click', () => {
             popup.remove()
         });
-    });
 
+        const form = document.getElementById('form-ajouter')
+
+        form.addEventListener('submit', (e)=>{
+            e.preventDefault();
+            // function regex
+        })
+        channelValidation()
+    });
 }
 
 // export function optionSelect() {

@@ -1,13 +1,15 @@
 import { getChannels } from "./api.js";
 import { selectCategory, rechercheChannel, displayChanges } from "./search.js";
 // import { getData } from "./storage.js";
-import { categoryShower, showCategorie, playChannel, hideSpinner, popupAjoute } from "./ui.js";
+import { categoryShower, showCategorie, playChannel, hideSpinner, popupAjouter } from "./ui.js";
+import { channelValidation } from "./validation.js"
 
 
 hideSpinner()
 const channels = await getChannels()
 showCategorie();
-popupAjoute()
+popupAjouter()
+
 categoryShower(channels)
 rechercheChannel(channels)
 selectCategory(channels)
