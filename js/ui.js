@@ -408,6 +408,7 @@ export function playChannel(channels) {
                     channels.splice(channelIndex, 1)
                     deleteChannel(channelId)
                     displayChanges(channels)
+                    categoryShower(channels)
                 }
             }
 

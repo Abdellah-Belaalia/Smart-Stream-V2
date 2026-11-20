@@ -91,4 +91,23 @@ export async function addChannel(channel) {
     }
 }
 
+export async function updateChannel(channelId, updateData) {
+    try {
+        const res = await fetch(`${API_URL}/${channelId}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(updateData)
+        });
+
+        if (!res.ok) {
+            await handleError(res)
+        }
+        const data = await res.json();
+        return data
+
+    } catch (error) {
+        console.error(error)
+    }
+}
+
 

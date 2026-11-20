@@ -1,4 +1,8 @@
-import { creationPopup } from "./ui.js"
+import { creationPopup, categoryShower } from "./ui.js"
+import { updateChannel } from "./api.js"
+import { displayChanges } from "./search.js"
+import { valideForm } from "./validation.js"
+
 export function editChannel(channels) {
 
     const channelsCard = document.getElementById("channels-card")
@@ -22,6 +26,11 @@ export function editChannel(channels) {
             if (choix === "edit") {
 
                 const popup = creationPopup();
+
+                popup.querySelector("h2").textContent = "Modifier la chaîne";
+
+                popup.querySelector("button[type='submit']").textContent = "Modifier";
+
 
                 const btnAnnuler = document.getElementById('btn-annuler')
 
@@ -48,7 +57,35 @@ export function editChannel(channels) {
                 countryCode.value = choosedChannel.countryCode
                 streamUrl.value = choosedChannel.streamUrl
 
-                
+                const form = document.getElementById('form-ajouter')
+
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault()
+
+                    if (!valideForm()) return;
+
+                    const updateData = {
+                        "channelNumber": channelNumber.value,
+                        "name": name.value,
+                        "category": category.value.toUpperCase(),
+                        "country": country.value,
+                        "countryCode": countryCode.value.toUpperCase(),
+                        "streamUrl": streamUrl.value,
+                    }
+
+                    choosedChannel.name = updateData.name
+                    choosedChannel.channelNumber = updateData.channelNumber
+                    choosedChannel.category = updateData.category
+                    choosedChannel.country = updateData.country
+                    choosedChannel.countryCode = updateData.countryCode
+                    choosedChannel.streamUrl = updateData.streamUrl
+
+                    await updateChannel(channelId, updateData)
+
+                    displayChanges(channels);
+                    categoryShower(channels);
+                    popup.remove()
+                })
             }
         }
     })
