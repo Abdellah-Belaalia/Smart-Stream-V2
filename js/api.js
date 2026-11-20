@@ -83,10 +83,12 @@ export async function addChannel(channel) {
         if (!res.ok) {
             await handleError(res)
         }
-        // const channel = await res.json();
-        // return channel
+        const data = await res.json();
+        return data
 
     } catch (error) {
         console.error(error)
     }
 }
+
+

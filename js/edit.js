@@ -47,8 +47,21 @@ export function editChannel(channels) {
                 country.value = choosedChannel.country
                 countryCode.value = choosedChannel.countryCode
                 streamUrl.value = choosedChannel.streamUrl
+
+                
             }
         }
     })
 
 }
+
+// const form = document.getElementById('form-ajouter')
+
+//         form.addEventListener('submit', (e) => {
+//             e.preventDefault();
+
+//             createChannel();
+
+//             form.reset();
+//             popup.remove();
+//         })

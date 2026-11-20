@@ -1,6 +1,8 @@
 import { getChannels, addChannel } from "./api.js";
 import { displayChanges } from "./search.js";
-export async function createChannel() {
+import { categoryShower } from "./ui.js";
+
+export async function createChannel(channels) {
 
     const regexName = /^[A-Za-zÀ-ÿ0-9\s-]{2,30}$/;
     const regexChannelNumber = /^\d{1,6}$/;
@@ -65,8 +67,6 @@ export async function createChannel() {
         return false;
     }
 
-    const channels = await getChannels()
-
     let nextId = 0
     channels.forEach(channel => {
         if (Number(channel.id) > nextId) {
@@ -82,7 +82,7 @@ export async function createChannel() {
         "name": name.value,
         "category": category.value.toUpperCase(),
         "country": country.value,
-        "countryCode": countryCode.value,
+        "countryCode": countryCode.value.toUpperCase(),
         "logo": "https://via.placeholder.com/60x60?text=NatGeo",
         "previewImage": "https://via.placeholder.com/800x450?text=NatGeo+Doc",
         "streamUrl": streamUrl.value,
@@ -97,9 +97,17 @@ export async function createChannel() {
         "isBlacklisted": false
     }
 
-    
+    const savedChannel = await addChannel(channel)
 
-    addChannel(channel)
-    displayChanges(channels)
+    if(savedChannel){
+
+        channels.push(savedChannel)
+        displayChanges(channels)
+        categoryShower(channels)
+
+        return true;
+    }
+
+    return false;
 
 }

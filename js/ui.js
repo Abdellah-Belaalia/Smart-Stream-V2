@@ -317,6 +317,9 @@ export function playChannel(channels) {
     const selectedChannel = channels.find(
         channel => !channel.isBlacklisted
     );
+
+    if(!selectedChannel) return;
+
     const videoPlayer = document.getElementById("player-video")
     if (!videoPlayer) return
 
@@ -559,7 +562,7 @@ export function creationPopup() {
 
 }
 
-export function popupAjouter(channel) {
+export function popupAjouter(channels) {
     const ajouterBtn = document.getElementById('button-ajouter')
 
     if (!ajouterBtn) return;
@@ -576,13 +579,15 @@ export function popupAjouter(channel) {
 
         const form = document.getElementById('form-ajouter')
 
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            createChannel();
+            const isAdded = await createChannel(channels);
 
-            form.reset();
-            popup.remove();
+            if(isAdded){
+                form.reset();
+                popup.remove();
+            }
         })
     });
 }
